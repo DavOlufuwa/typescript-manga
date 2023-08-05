@@ -2,15 +2,18 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './App.css'
 import Home from './routes/Home'
 import { AllComicsProvider } from './contexts/AllComicsContext'
-import ComicInfo from './routes/ComicInfo'
+import AllComics from './routes/AllComics'
+import ComicDetails from './routes/ComicDetails'
+import Layout from './routes/Layout'
 
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/">
+    <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path="comic" element={<ComicInfo />} />
+      <Route path="allcomics" element={<AllComics />} />
+      <Route path="comics/:slug" element={<ComicDetails />} />
     </Route>
   )
 )

@@ -5,7 +5,7 @@ import getChapters from '@/custom-hooks/getChapters'
 import { Button } from '@/components/ui/button'
 
 
-const ComicInfo = () => {
+const ComicDetails = () => {
   
   // getStateFromTheRoute
   const location = useLocation()
@@ -97,4 +97,4 @@ const ComicInfo = () => {
   )
 }
 
-export default ComicInfo
+export default ComicDetails
