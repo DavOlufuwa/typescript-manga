@@ -22,15 +22,7 @@ const ComicInfo = () => {
   const [loadingManga, setLoadingManga] = useState<boolean>(true)
   
   // setting values for the pagination
-
-
-
   
-
-  
-
-  
-
   const sortedChapters = useMemo(() => allChapters.sort((a, b) => a.chapterNum - b.chapterNum), [allChapters])
 
   const displayedChapter = useMemo(()=> sortedChapters.find(chapter => chapter.chapterNum === activeChapter), [sortedChapters, activeChapter])
@@ -60,6 +52,7 @@ const ComicInfo = () => {
       return
     }
     setActiveChapter(sortedChapters[currentIndex + 1].chapterNum)
+    window.scrollTo(0, 0);
   }
 
 
