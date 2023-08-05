@@ -72,7 +72,7 @@ const ComicInfo = () => {
         }
       </select>
       <div>
-        {activeChapter}
+        
       </div>
       <div>
         {
