@@ -9,4 +9,8 @@
   html {
     font-family: 'Inter', sans-serif;
   }
+
+  img{
+    @apply h-full w-full    
+  }
 }

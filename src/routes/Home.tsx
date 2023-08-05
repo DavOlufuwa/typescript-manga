@@ -39,32 +39,29 @@ const Home = () => {
   
   
   return (
-    <div>
+    <div className="px-14 md:px-20 lg:px-32">
       <h1>All Comics</h1>
-      <section>
+      <section className="relative w-full">
         <Swiper
           onBeforeInit={(swiping) => setSwiping(swiping)}
-          speed={200}
+          speed={700}
           autoplay={{
             delay: 5000
           }}
           breakpoints={{
-            640: {
+            680: {
               slidesPerView: 2,
-              
             },
-            768: {
+            800: {
               slidesPerView: 3,
-              
             },
             1024: {
               slidesPerView: 4,
             },
           }}
           loop={true}
-          modules={[Autoplay, Controller, Thumbs, Navigation]}
+          modules={[Autoplay, Controller, Thumbs, Navigation]} 
         >
-
           {
             allComics.slice(10, 20).map((comic, index) => 
               <SwiperSlide key={index}>
@@ -72,32 +69,26 @@ const Home = () => {
                   to={`/comics/${comic.slug}`}
                   state={{comic}}
                 >
-                  <Card>
-                    <CardContent>
-                      <div>
-                        <img src={comic.coverURL} alt={`cover of comic with title ${comic.title}`}/>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <div>{comic.title}</div>
-                      <div>{comic.genre}</div>
-                    </CardFooter>
-                  </Card>
+                  <div className="h-96 sm:mr-5  ">
+                    <img src={comic.coverURL} alt={`cover of comic with title ${comic.title}`} className="rounded-2xl"/>
+                  </div>
                 </Link>
               </SwiperSlide>
             )
           }
         </Swiper>
+        
+          <div className="absolute  top-36 -right-14 h-16 w-16 sm:h-20 cursor-pointer" onClick={()=> swiping?.slidePrev()}>
+            <img src={CaretRight} alt="icon to scroll left"/>
+          </div>
+          <div className="absolute top-36 -left-16 sm:-left-20 h-16 w-20 sm:h-20 cursor-pointer" onClick={()=> swiping?.slideNext()}>
+            <img src={CaretLeft} alt="icon to scroll right"/>
+          </div>
+        
       </section>
-      <div className="bg-red-300" onClick={()=> swiping?.slidePrev()}>
-        <img src={CaretRight} alt=""/>
-      </div>
-      <div className="bg-green-500" onClick={()=> swiping?.slideNext()}>
-        <img src={CaretLeft} alt=""/>
-      </div>
         
       {/* <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} /> */}
-      <section>
+      {/* <section>
         <div>
           Latest Releases
         </div>
@@ -182,7 +173,7 @@ const Home = () => {
             )
           }
         </div>
-      </section>
+      </section> */}
       
       {/* <div>
         <ReactPaginate 
