@@ -15,6 +15,7 @@ import CaretLeft from '/caret-left.svg'
 
 
 
+
 const Home = () => {
 
   // swiper function
@@ -37,6 +38,8 @@ const Home = () => {
 
 
   const [swiping, setSwiping] = useState<any>() 
+  const [moving, setMoving] = useState<any>() 
+
   
   const getBestPicks = (arr: ComicInterface[], numofObjects: number): ComicInterface[] => {
     const arrayLength = arr.length
@@ -184,7 +187,7 @@ const Home = () => {
           <div className="px-14 md:px-20 lg:px-32">
           <section className="relative w-full">
             <Swiper
-              onBeforeInit={(swiping) => setSwiping(swiping)}
+              onBeforeInit={(moving) => setMoving(moving)}
               speed={700}
               autoplay={{
                 delay: 5000
@@ -223,10 +226,10 @@ const Home = () => {
                 )
               }
             </Swiper>
-              <div className="absolute  top-36 -right-14 h-16 w-16 sm:h-20 cursor-pointer" onClick={()=> swiping?.slideNext()}>
+              <div className="absolute  top-36 -right-14 h-16 w-16 sm:h-20 cursor-pointer" onClick={()=> moving?.slideNext()}>
                 <img src={CaretRight} alt="icon to scroll left"/>
               </div>
-              <div className="absolute top-36 -left-16 sm:-left-20 h-16 w-20 sm:h-20 cursor-pointer" onClick={()=> swiping?.slidePrev()}>
+              <div className="absolute top-36 -left-16 sm:-left-20 h-16 w-20 sm:h-20 cursor-pointer" onClick={()=> moving?.slidePrev()}>
                 <img src={CaretLeft} alt="icon to scroll right"/>
               </div>
             
