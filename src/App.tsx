@@ -5,6 +5,7 @@ import { AllComicsProvider } from './contexts/AllComicsContext'
 import AllComics from './routes/AllComics'
 import ComicDetails from './routes/ComicDetails'
 import Layout from './routes/Layout'
+import { SavedAndReadComicsProvider } from './contexts/SavedAndReadComicsContext'
 
 
 
@@ -24,7 +25,9 @@ function App() {
  
   return (
     <AllComicsProvider>
-      <RouterProvider router={router}/>
+      <SavedAndReadComicsProvider>
+        <RouterProvider router={router}/>
+      </SavedAndReadComicsProvider>
     </AllComicsProvider>
   )
 }

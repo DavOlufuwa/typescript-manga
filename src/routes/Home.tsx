@@ -2,7 +2,7 @@ import { useComics } from "../contexts/AllComicsContext"
 import { Card, CardContent, CardFooter } from "../components/ui/card"
 import { Link } from "react-router-dom"
 import { useState,  } from "react"
-import { Autoplay , Controller, Thumbs, Navigation } from "swiper/modules"
+import { Autoplay , Controller, Thumbs, Navigation, Pagination } from "swiper/modules"
 import { Swiper , SwiperSlide } from "swiper/react"
 import 'swiper/css/bundle'
 import { ComicInterface } from "@/custom-hooks/getComics"
@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button"
 
 import CaretRight from '/caret-right.svg'
 import CaretLeft from '/caret-left.svg'
+import manageReadandSavedComics from "@/custom-hooks/manageReadandSavedComics"
+import { useSavedAndReadComics } from "@/contexts/SavedAndReadComicsContext"
 
 
 
@@ -23,7 +25,9 @@ const Home = () => {
 
   const {allComics} = useComics()
 
+  const {addToReadComics, recentlyReadComics} = manageReadandSavedComics()
 
+  
   // // for Pagination
   // const [pageNumber, setPageNumber] = useState<number>(0)
   // const comicsPerPage = 10
@@ -56,11 +60,6 @@ const Home = () => {
 
   const bestPicksArray = getBestPicks(allComics, 10)
 
-  
-
-
-  
-  
   return (
     <>
       <div >
@@ -123,7 +122,7 @@ const Home = () => {
         {/* <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} /> */}
 
         {/* Latest Releases */}
-        <section className="small-section">
+        <section className="small-section ">
           <div className="title">
             Latest Releases
           </div>
@@ -180,7 +179,7 @@ const Home = () => {
         </section>
 
         {/* Best Picks Section */}
-        <section className="carousel-section">
+        <section className="carousel-section pb-32">
           <div className="title px-6 md:px-20 lg:px-32">
             Best Picks For You
           </div>
@@ -196,29 +195,32 @@ const Home = () => {
                 680: {
                   slidesPerView: 2,
                 },
-                800: {
+                950: {
                   slidesPerView: 3,
                 },
-                1024: {
+                1320: {
                   slidesPerView: 4,
                 },
               }}
               loop={true}
-              modules={[Autoplay, Controller, Thumbs, Navigation]} 
+              modules={[Autoplay, Controller, Thumbs, Pagination]} 
             >
               {
-                bestPicksArray.map((comick, index) => 
-                  <SwiperSlide key={index}>
+                bestPicksArray.map((comic, index) => 
+                  <SwiperSlide key={index}
+                    className="flex items-center justify-center"
+                    onClick={() => addToReadComics(comic)}
+                  >
                     <Link 
-                      to={`/comics/${comick.slug}`}
-                      state={{comick}}
+                      to={`/comics/${comic.slug}`}
+                      state={{comic}}
                     >
-                      <div className="parent-cover relative h-96 sm:mr-5 text-white">
-                        <img src={comick.coverURL} alt={`cover of comic with title ${comick.title}`} className="rounded-2xl"/>
+                      <div className="parent-cover relative h-64 w-64 text-white overflow-clip ">
+                        <img src={comic.coverURL} alt={`cover of comic with title ${comic.title}`} className="rounded-full"/>
                         
-                        <div className="child-cover">
-                          <p className="mb-5 text-2xl font-semibold text-center">{comick.title}</p>
-                          <p className="mb-6 text-sm font-light">{comick.genre?.slice(0, 3).join(". ")}</p>
+                        <div className="child-cover rounded-full ">
+                          <p className="mb-5 text-2xl font-semibold text-center">{comic.title}</p>
+                          <p className="mb-6 text-sm font-light">{comic.genre?.slice(0, 3).join(". ")}</p>
                         </div>
                       </div>
                     </Link>
@@ -226,13 +228,12 @@ const Home = () => {
                 )
               }
             </Swiper>
-              <div className="absolute  top-36 -right-14 h-16 w-16 sm:h-20 cursor-pointer" onClick={()=> moving?.slideNext()}>
+              <div className="absolute  top-24 -right-14 h-16 w-16 sm:h-20 cursor-pointer" onClick={()=> moving?.slideNext()}>
                 <img src={CaretRight} alt="icon to scroll left"/>
               </div>
-              <div className="absolute top-36 -left-16 sm:-left-20 h-16 w-20 sm:h-20 cursor-pointer" onClick={()=> moving?.slidePrev()}>
+              <div className="absolute top-24 -left-16 sm:-left-20 h-16 w-20 sm:h-20 cursor-pointer" onClick={()=> moving?.slidePrev()}>
                 <img src={CaretLeft} alt="icon to scroll right"/>
               </div>
-            
           </section>
         </div>
         </section>

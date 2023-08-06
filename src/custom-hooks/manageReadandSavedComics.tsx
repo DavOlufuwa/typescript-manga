@@ -61,7 +61,7 @@ const savedComicsReducer = (state: SavedComicsStateType, action: SavedComicsActi
       if (existingReadComic) {
         // remove from recently read
         state.recentlyReadComics.filter(comic => comic.slug !== action.payload.slug)
-        
+        console.log(state.recentlyReadComics)
         // then add again to recently read
         return{
           ...state,

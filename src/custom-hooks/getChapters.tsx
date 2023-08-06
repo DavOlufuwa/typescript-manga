@@ -1,7 +1,7 @@
 import { useReducer ,useEffect, useCallback} from 'react'
 import axios from "axios"
 
-interface ChapterInterface {
+export interface ChapterInterface {
   provider: string
   slug: string
   fullTitle: string

@@ -18,14 +18,12 @@ type ComicStateType = {
   allComics: ComicInterface[]
   searchValue: string
   setSearchValue: (value: string) => void
-
 }
 
 const initialState: ComicStateType = {
   allComics: [],
   searchValue: "", 
   setSearchValue: () => {},
-
 }
 
 // Action Types
