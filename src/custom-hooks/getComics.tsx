@@ -64,7 +64,8 @@ const getComics = ():ComicStateType  => {
 
   const axiosComics = async () => {
     const urlA = `https://manga-scrapper.p.rapidapi.com/webtoons?provider=flame&page=1&limit=20`;
-    const urlB = `https://manga-scrapper.p.rapidapi.com/webtoons?provider=cosmic&page=2&limit=20`;
+    const urlB = `https://manga-scrapper.p.rapidapi.com/webtoons?provider=surya&page=1&limit=20`;
+    const urlC = `https://manga-scrapper.p.rapidapi.com/webtoons?provider=cosmic&page=1&limit=20`;
   
     const options = {
       method: 'GET',
@@ -75,13 +76,14 @@ const getComics = ():ComicStateType  => {
     };
   
     try {
-      const [responseOne, responseTwo] = await axios.all([
+      const [responseOne, responseTwo, responseThree] = await axios.all([
         axios.get(urlA, options),
-        axios.get(urlB, options)
+        axios.get(urlB, options),
+        axios.get(urlC, options)
       ]);
   
       // Combine both responses into a single array
-      const combinedData = [...responseOne.data, ...responseTwo.data];
+      const combinedData = [...responseOne.data, ...responseTwo.data, ...responseThree.data];
       
       dispatch({
         type: "setComics",

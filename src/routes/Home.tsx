@@ -1,17 +1,15 @@
 import { useComics } from "../contexts/AllComicsContext"
-import { Card, CardContent, CardFooter } from "../components/ui/card"
 import { Link } from "react-router-dom"
 import { useState,  } from "react"
 import { Autoplay , Controller, Thumbs, Navigation, Pagination } from "swiper/modules"
 import { Swiper , SwiperSlide } from "swiper/react"
 import 'swiper/css/bundle'
 import { ComicInterface } from "@/custom-hooks/getComics"
-import { Button } from "@/components/ui/button"
-
 import CaretRight from '/caret-right.svg'
 import CaretLeft from '/caret-left.svg'
+import PicsArt from '/pic-ads.png'
 import manageReadandSavedComics from "@/custom-hooks/manageReadandSavedComics"
-import { useSavedAndReadComics } from "@/contexts/SavedAndReadComicsContext"
+
 
 
 
@@ -120,7 +118,12 @@ const Home = () => {
         </div>
           
         {/* <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} /> */}
-
+        <section className="relative mx-6 text-center mt-8 md:mx-20 lg:mx-32">
+          <div className=" text-center text-2xl text-white font-bold">
+            Read Your Favorite Comics Right Here
+          </div>
+          <img className="h-40 w-52 md:h-52 md:w-72 mx-auto" src={PicsArt} alt="PicsArt"/>
+        </section>
         {/* Latest Releases */}
         <section className="small-section ">
           <div className="title">
@@ -153,7 +156,7 @@ const Home = () => {
             </div>
             <div className="grid gap-4">
               {
-                allComics.slice(4, 8).map((comic, index) => 
+                allComics.slice(12, 16).map((comic, index) => 
                   <Link
                     to={`/comics/${comic.slug}`}
                     state={{comic}}

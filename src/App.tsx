@@ -6,6 +6,7 @@ import AllComics from './routes/AllComics'
 import ComicDetails from './routes/ComicDetails'
 import Layout from './routes/Layout'
 import { SavedAndReadComicsProvider } from './contexts/SavedAndReadComicsContext'
+import ComicChapter from './routes/ComicChapter'
 
 
 
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="allcomics" element={<AllComics />} />
       <Route path="comics/:slug" element={<ComicDetails />} />
+      <Route path="comics/:slug/chapter/:chapter" element={<ComicChapter/>}/>
     </Route>
   )
 )

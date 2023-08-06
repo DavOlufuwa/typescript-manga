@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ComicInterface } from '@/custom-hooks/getComics'
 import getChapters from '@/custom-hooks/getChapters'
-import { Button } from '@/components/ui/button'
+
 import { Badge } from '@/components/ui/badge'
 import Overview from '@/components/Overview'
 import AllChapters from '@/components/AllChapters'
@@ -16,7 +16,7 @@ const ComicDetails = () => {
   const comicInfo:ComicInterface  =  location.state?.comic
   
   // destructure comicInfo
-  const {provider, slug, title, sourceURL, shortURL, coverURL, genre, synopsis} = comicInfo
+  const {provider, slug, title, coverURL} = comicInfo
 
   // getting values from the custom hook
   const {allChapters, activeChapter, setActiveChapter} = getChapters(provider, slug)
@@ -40,9 +40,7 @@ const ComicDetails = () => {
   
   const sortedChapters = useMemo(() => allChapters.sort((a, b) => a.chapterNum - b.chapterNum), [allChapters])
 
-  const displayedChapter = useMemo(()=> sortedChapters.find(chapter => chapter.chapterNum === activeChapter), [sortedChapters, activeChapter])
 
-  const imageContent: string[] | undefined = displayedChapter?.contentURL
 
   // function to work with select and option
   const handleChapterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -52,24 +50,7 @@ const ComicDetails = () => {
     setActiveChapter(value)
   }
 
-  const currentIndex = sortedChapters.findIndex(chapter => chapter.chapterNum === Number(activeChapter))
-
-  // handling chapter change
-  const switchToPrevChapter = () => {
-   if (currentIndex === 0) {
-     return
-   }
-   setActiveChapter(sortedChapters[currentIndex - 1].chapterNum)
-  }
-
-  const switchToNextChapter = () => {
-    if (currentIndex === sortedChapters.length - 1) {
-      return
-    }
-    setActiveChapter(sortedChapters[currentIndex + 1].chapterNum)
-    window.scrollTo(0, 0);
-  }
-
+ 
 
   return (
     <main>
@@ -89,7 +70,7 @@ const ComicDetails = () => {
               active ? 
               <Overview comic={comicInfo}/> 
               :
-              <AllChapters chapters={sortedChapters}/> 
+              <AllChapters chapters={sortedChapters} comic={comicInfo}/> 
             }
              
              
@@ -122,15 +103,7 @@ const ComicDetails = () => {
         }
       </div> */}
 
-      {/* <div>
-        <Button
-          onClick={switchToPrevChapter}
-        >Previous Page</Button>
-        <Button
-          onClick={switchToNextChapter}
-        >Next Page</Button>
-      </div> */}
-
+      
     </main>
   )
 }
