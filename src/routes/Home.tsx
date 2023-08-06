@@ -5,6 +5,7 @@ import { useState,  } from "react"
 import { Autoplay , Controller, Thumbs, Navigation } from "swiper/modules"
 import { Swiper , SwiperSlide } from "swiper/react"
 import 'swiper/css/bundle'
+import { ComicInterface } from "@/custom-hooks/getComics"
 import { Button } from "@/components/ui/button"
 
 import CaretRight from '/caret-right.svg'
@@ -36,6 +37,25 @@ const Home = () => {
 
 
   const [swiping, setSwiping] = useState<any>() 
+  
+  const getBestPicks = (arr: ComicInterface[], numofObjects: number): ComicInterface[] => {
+    const arrayLength = arr.length
+    numofObjects = Math.min(numofObjects, arrayLength)
+
+    const indices = Array.from({length: arrayLength}, (_, i) => i)
+
+    const selectedIndices = indices.slice(0, numofObjects)
+
+    const randomObjects = selectedIndices.map(i => arr[i])
+
+    return randomObjects
+  }
+
+  const bestPicksArray = getBestPicks(allComics, 10)
+
+  
+
+
   
   
   return (
@@ -155,39 +175,65 @@ const Home = () => {
             </div>
           </div>
         </section>
-        {/* <section>
-          {
-            (
-            <div className="grid grid-cols-2">
-              {allComics.map((comic, index) => {
 
-                  // destructured each comic
-                  const {slug, title, coverURL , genre, } = comic
-                  return(
+        {/* Best Picks Section */}
+        <section className="carousel-section">
+          <div className="title px-6 md:px-20 lg:px-32">
+            Best Picks For You
+          </div>
+          <div className="px-14 md:px-20 lg:px-32">
+          <section className="relative w-full">
+            <Swiper
+              onBeforeInit={(swiping) => setSwiping(swiping)}
+              speed={700}
+              autoplay={{
+                delay: 5000
+              }}
+              breakpoints={{
+                680: {
+                  slidesPerView: 2,
+                },
+                800: {
+                  slidesPerView: 3,
+                },
+                1024: {
+                  slidesPerView: 4,
+                },
+              }}
+              loop={true}
+              modules={[Autoplay, Controller, Thumbs, Navigation]} 
+            >
+              {
+                bestPicksArray.map((comick, index) => 
+                  <SwiperSlide key={index}>
                     <Link 
-                      key={index} 
-                      to={`/comics/${slug}`}
-                      state={{comic}}
+                      to={`/comics/${comick.slug}`}
+                      state={{comick}}
                     >
-                      <Card>
-                        <CardContent>
-                          <div>
-                            <img src={coverURL} alt={`cover of comic with title ${slug}`}/>
-                          </div>
-                        </CardContent>
-                        <CardFooter className="flex flex-col">
-                          <div>{title}</div>
-                          <div>{genre?.join(", ")}</div>
-                        </CardFooter>
-                      </Card>
+                      <div className="parent-cover relative h-96 sm:mr-5 text-white">
+                        <img src={comick.coverURL} alt={`cover of comic with title ${comick.title}`} className="rounded-2xl"/>
+                        
+                        <div className="child-cover">
+                          <p className="mb-5 text-2xl font-semibold text-center">{comick.title}</p>
+                          <p className="mb-6 text-sm font-light">{comick.genre?.slice(0, 3).join(". ")}</p>
+                        </div>
+                      </div>
                     </Link>
-                  )
-                }
-              )}
-            </div>
-            )
-          }
-        </section> */}
+                  </SwiperSlide>
+                )
+              }
+            </Swiper>
+              <div className="absolute  top-36 -right-14 h-16 w-16 sm:h-20 cursor-pointer" onClick={()=> swiping?.slideNext()}>
+                <img src={CaretRight} alt="icon to scroll left"/>
+              </div>
+              <div className="absolute top-36 -left-16 sm:-left-20 h-16 w-20 sm:h-20 cursor-pointer" onClick={()=> swiping?.slidePrev()}>
+                <img src={CaretLeft} alt="icon to scroll right"/>
+              </div>
+            
+          </section>
+        </div>
+        </section>
+
         {/* <section>
           <div>
             Recently Viewed
@@ -225,8 +271,8 @@ const Home = () => {
               )
             }
           </div>
-        </section> */}
-        
+        </section>
+         */}
         {/* <div>
           <ReactPaginate 
             previousLabel={`${indexOfLastComic > 10 ? "Prev" : ""}`}
