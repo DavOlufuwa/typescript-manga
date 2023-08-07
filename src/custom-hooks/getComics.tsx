@@ -84,10 +84,12 @@ const getComics = ():ComicStateType  => {
   
       // Combine both responses into a single array
       const combinedData = [...responseOne.data, ...responseTwo.data, ...responseThree.data];
+
+      const filteredCombinedData = combinedData.filter((comic) => comic.slug !== "announcement")
       
       dispatch({
         type: "setComics",
-        payload: combinedData
+        payload: filteredCombinedData
       })
      
     } catch (error) {

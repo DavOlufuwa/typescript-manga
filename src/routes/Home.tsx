@@ -8,7 +8,8 @@ import { ComicInterface } from "@/custom-hooks/getComics"
 import CaretRight from '/caret-right.svg'
 import CaretLeft from '/caret-left.svg'
 import PicsArt from '/pic-ads.png'
-import manageReadandSavedComics from "@/custom-hooks/manageReadandSavedComics"
+import { useSavedAndReadComics } from "@/contexts/SavedAndReadComicsContext"
+
 
 
 
@@ -23,7 +24,9 @@ const Home = () => {
 
   const {allComics} = useComics()
 
-  const {addToReadComics, recentlyReadComics} = manageReadandSavedComics()
+  const {recentlyReadComics} = useSavedAndReadComics()
+
+
 
   
   // // for Pagination
@@ -57,12 +60,19 @@ const Home = () => {
   }
 
   const bestPicksArray = getBestPicks(allComics, 10)
-
+  
   return (
     <>
+      <section>
+        <div className="px-14 md:px-20 lg:px-32 text-white">
+          <h1 className="text-white">Recently Viewed Comics</h1>
+          {
+            recentlyReadComics && recentlyReadComics.map((comic, index) => <div key={index}>{comic.title}</div>)
+          }
+        </div>
+      </section>
       <div >
         <h1>All Comics</h1>
-
         {/* First Carousel  */}
         <div className="px-14 md:px-20 lg:px-32">
           <section className="relative w-full">
@@ -92,8 +102,11 @@ const Home = () => {
                     <Link 
                       to={`/comics/${comic.slug}`}
                       state={{comic}}
+                      
                     >
-                      <div className="parent-cover relative h-96 sm:mr-5 text-white">
+                      <div 
+                      className="parent-cover relative h-96 sm:mr-5 text-white"
+                      >
                         <img src={comic.coverURL} alt={`cover of comic with title ${comic.title}`} className="rounded-2xl"/>
                         
                         <div className="child-cover">
@@ -212,7 +225,6 @@ const Home = () => {
                 bestPicksArray.map((comic, index) => 
                   <SwiperSlide key={index}
                     className="flex items-center justify-center"
-                    onClick={() => addToReadComics(comic)}
                   >
                     <Link 
                       to={`/comics/${comic.slug}`}

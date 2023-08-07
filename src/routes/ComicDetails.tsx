@@ -1,11 +1,16 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo,  } from 'react'
 import { useLocation } from 'react-router-dom'
-import { ComicInterface } from '@/custom-hooks/getComics'
 import getChapters from '@/custom-hooks/getChapters'
-
+import { useEffect } from 'react'
 import { Badge } from '@/components/ui/badge'
 import Overview from '@/components/Overview'
 import AllChapters from '@/components/AllChapters'
+import { useSavedAndReadComics } from '@/contexts/SavedAndReadComicsContext'
+import { ComicInterface } from '@/custom-hooks/getComics'
+
+
+
+
 
 
 const ComicDetails = () => {
@@ -13,7 +18,7 @@ const ComicDetails = () => {
   // getStateFromTheRoute
   const location = useLocation()
 
-  const comicInfo:ComicInterface  =  location.state?.comic
+  const comicInfo: ComicInterface  =  location.state?.comic
   
   // destructure comicInfo
   const {provider, slug, title, coverURL} = comicInfo
@@ -35,12 +40,20 @@ const ComicDetails = () => {
   }
 
 
+  // Saving into Recently Viewed Comics
+
 
   // setting values for the pagination
   
   const sortedChapters = useMemo(() => allChapters.sort((a, b) => a.chapterNum - b.chapterNum), [allChapters])
 
+  const {setRecentlyReadComic} = useSavedAndReadComics()
 
+  useEffect(() => {
+    setRecentlyReadComic(comicInfo)
+  },[])
+
+  
 
   // function to work with select and option
   const handleChapterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,8 +62,6 @@ const ComicDetails = () => {
     
     setActiveChapter(value)
   }
-
- 
 
   return (
     <main>

@@ -61,7 +61,7 @@ const chapterReducer = (state: ChapterStateType , action: ChapterActions) => {
   }
 
 
-const getChapters = (provider: string, webtoon: string):ChapterStateType  => {
+const getChapters = (provider: string, webtoon: string):ChapterStateType => {
 
 
 
@@ -75,7 +75,7 @@ const getChapters = (provider: string, webtoon: string):ChapterStateType  => {
       webtoon: webtoon
     },
     headers: {
-      'X-RapidAPI-Key': '76fadf03admshc7d99749ca28ab8p16c57ajsn55c84d8e9759',
+      'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_KEY,
       'X-RapidAPI-Host': 'manga-scrapper.p.rapidapi.com'
     }
   };
@@ -110,7 +110,6 @@ const getChapters = (provider: string, webtoon: string):ChapterStateType  => {
     activeChapter,
     setActiveChapter
   }
-
 }
 
 export default getChapters

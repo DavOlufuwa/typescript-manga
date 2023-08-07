@@ -9,7 +9,6 @@ import { SavedAndReadComicsProvider } from './contexts/SavedAndReadComicsContext
 import ComicChapter from './routes/ComicChapter'
 
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -22,9 +21,7 @@ const router = createBrowserRouter(
 )
 
 
-
 function App() {
- 
   return (
     <AllComicsProvider>
       <SavedAndReadComicsProvider>
