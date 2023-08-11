@@ -20,7 +20,7 @@ const NavBar = () => {
   return (
     <header className="pb-3 md:py-3 bg-[#0e0d0d]">
       <nav className="flex justify-between items-center w-[92%] mx-auto" >
-        <div className='z-50  '>
+        <div className='z-50'>
           <Link to="" className='flex items-center min-w-max'>
             <img className="w-16" src={Logo} alt="logo"/><span className='logo-txt '>AMP COMICS</span>
           </Link>
@@ -30,7 +30,6 @@ const NavBar = () => {
             <li><Link to=""  className='text-slate-300 text-base font-normal duration-200 hover:text-blue-400' onClick={toggleMenu}>Home</Link></li>
             <li><Link to="allcomics" className='text-slate-300 text-base font-normal duration-200 hover:text-blue-400' onClick={toggleMenu}>All Comics</Link></li>
             <li><Link to="savedcomics" className='text-slate-300 text-base font-normal duration-200 hover:text-blue-400' onClick={toggleMenu}>Saved Comics</Link></li>
-            <li><Link to="" className='text-slate-300 text-base font-normal duration-200 hover:text-blue-400' onClick={toggleMenu}>All Comics</Link></li>
           </ul>
         </div>
         <div className="flex items-center gap-4">

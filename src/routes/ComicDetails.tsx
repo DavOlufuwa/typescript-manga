@@ -27,11 +27,12 @@ const ComicDetails = () => {
   const {provider, slug, title, coverURL} = comicInfo
 
   // getting values from the custom hook
-  const {allChapters, setActiveChapter} = getChapters(provider, slug)
+  const {allChapters} = getChapters(provider, slug)
 
   // loading state
-  const [loadingManga, setLoadingManga] = useState<boolean>(true)
+ 
   const [active, setActive] = useState<boolean>(true)
+ 
 
   const handleOverviewBadgeState = () => {
     active === false &&
@@ -50,11 +51,16 @@ const ComicDetails = () => {
   
   const sortedChapters = useMemo(() => allChapters.sort((a, b) => a.chapterNum - b.chapterNum), [allChapters])
 
-  const {setRecentlyReadComic, saveAComic} = useSavedAndReadComics()
+  const {setRecentlyReadComic, saveAComic, savedComics} = useSavedAndReadComics()
 
   useEffect(() => {
     setRecentlyReadComic(comicInfo)
   },[])
+
+
+  const isSaved = savedComics.find(comic => comic.slug === comicInfo.slug)
+
+  
 
   
 
@@ -72,7 +78,7 @@ const ComicDetails = () => {
 
                 <Badge className={`cursor-pointer px-5 py-2 text-md text-gray-300  ${active ? 'text-gray-500 hover:border hover:border-gray-500':'text-white'} `} onClick={handleAllChaptersBadgeState}>Chapters</Badge>
 
-                <div className='cursor-pointer w-10' onClick={() => saveAComic(comicInfo)}><img src={Whiteheart} alt="like button"/></div>
+                <div className={`cursor-pointer w-10`} onClick={() => saveAComic(comicInfo)}><img src={isSaved ? Redheart : Emptyheart} alt="like button" className={isSaved ? 'shadow-lg shadow-red-500' : 'text-white'}/></div>
 
                 
             </div>

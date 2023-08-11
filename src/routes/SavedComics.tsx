@@ -16,7 +16,7 @@ const SavedComics = () => {
 
   return (
     <div className='text-white'>
-      <div className='text-center mb-12'>Saved comics</div>
+      <div className="text-center text-white text-2xl mb-10">Saved Comics</div>
       <div className='grid gap-3 md:grid-cols-2 lg:grid-cols-3 text-white px-6 md:px-20 lg:px-32'>
         {
           savedComics && savedComics.map((comic, index) => 

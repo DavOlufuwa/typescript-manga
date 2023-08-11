@@ -1,4 +1,4 @@
-import { useEffect, useMemo , useCallback, useReducer } from "react"
+import { useEffect, useCallback, useReducer } from "react"
 
 import { ComicInterface } from "./getComics"
 

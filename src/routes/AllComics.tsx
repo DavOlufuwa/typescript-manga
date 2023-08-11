@@ -2,14 +2,24 @@ import { useComics } from "@/contexts/AllComicsContext"
 import { ComicInterface } from "@/custom-hooks/getComics";
 import { Link } from "react-router-dom";
 
+
+
+
 const AllComics = () => {
+
+
+
+
   const {allComics,} = useComics()
 
   const beginningAlphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', ];
 
+  
+
+
   return (
-    <div>
-      <div className="text-center">Select a comic to read</div>
+    <div className="">
+      <div className="text-center text-white text-2xl mb-10">Select a comic to read</div>
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 text-white px-10 md:px-20 lg:px-32 ">
         {
           beginningAlphabets.map((letter, index) => {
@@ -32,7 +42,6 @@ const AllComics = () => {
             )
           })
         }
-        
       </div>
     </div>
   )
