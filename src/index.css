@@ -10,6 +10,9 @@
     font-family: 'Inter', sans-serif;
     @apply bg-[#0e0d0d] scroll-smooth
   }
+  body.overflow-hidden{
+    overflow: hidden;
+  }
 
   img{
     @apply h-full w-full   
@@ -35,6 +38,25 @@
   .carousel-section{
     @apply mt-16
   }
+
+  .logo-txt{
+    font-size: 1.5rem;
+    font-style: italic;
+    padding-right: 0.5rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #Febf5b, #f45cc0, #6538d3, #42b05c , #20b0d9, #1415b1 100%);
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    transition: all 2s ease;
+  }
+  
+  .logo-txt:hover{
+    background: linear-gradient(to right, #6538d3, #f45cc0,  #42b05c ,#Febf5b,  #1415b1, #20b0d9 100%);
+    background-clip: text;
+  }
+
+
 }
 
 

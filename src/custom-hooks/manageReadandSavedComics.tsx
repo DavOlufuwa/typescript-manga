@@ -5,14 +5,18 @@ import { ComicInterface } from "./getComics"
 
 type ReadandSavedComicState = {
   recentlyReadComics: ComicInterface[],
-  recentlyReadComic: ""
+  savedComics: ComicInterface[],
   setRecentlyReadComic: (value: ComicInterface) => void
+  saveAComic: (value: ComicInterface) => void
+  deleteASavedComic: (value: ComicInterface) => void
 }
 
 const initialReadAndSavedComicState: ReadandSavedComicState = {
   recentlyReadComics: [],
-  recentlyReadComic: "",
-  setRecentlyReadComic: () => {}
+  savedComics: [],
+  setRecentlyReadComic: () => {},
+  saveAComic: () => {},
+  deleteASavedComic: () => {},
 }
 
 type ReadandSavedComicActions = {
@@ -21,10 +25,22 @@ type ReadandSavedComicActions = {
 } | {
   type: "createRecentlyReadComicsStorage"
   payload: ComicInterface[]
+} | {
+  type: "createSavedComicsStorage"
+  payload: ComicInterface[]
+} | {
+  type: "setSavedComics"
+  payload: ComicInterface
+} | {
+  type: "addSavedComic"
+  payload: ComicInterface
+} | {
+  type: "deleteSavedComic"
+  payload: ComicInterface
 }
 
 
-
+// THE REDUCER 
 const readandSavedComicReducer = (state: ReadandSavedComicState, action: ReadandSavedComicActions) => {
   switch(action.type){
     case "setRecentlyReadComics":{
@@ -56,13 +72,58 @@ const readandSavedComicReducer = (state: ReadandSavedComicState, action: Readand
         recentlyReadComics: action.payload
       }
     }
+  
+    case "createSavedComicsStorage":{
+      return {
+        ...state,
+        savedComics: action.payload
+      }
+    }
+    case "setSavedComics":{
+      return {
+        ...state,
+        savedComics: [action.payload, ...state.savedComics]
+      }
+    }
+    case "addSavedComic":{
+      const existingComic = state.savedComics.find((comic) => comic.slug === action.payload.slug)
+
+      if(existingComic){
+        
+        state.savedComics = state.savedComics.filter((comic) => comic.slug !== action.payload.slug)
+
+        localStorage.setItem("savedComics", JSON.stringify([action.payload, ...state.savedComics, ]))
+
+        return {
+          ...state,
+          savedComics: [action.payload ,...state.savedComics, ]
+        }
+      }
+      
+      localStorage.setItem("savedComics", JSON.stringify([action.payload, ...state.savedComics]))
+
+      return {
+        ...state,
+        savedComics: [action.payload, ...state.savedComics]
+      }
+    }
+    case "deleteSavedComic":{
+      const filteredSavedComics = state.savedComics.filter((comic) => comic.slug !== action.payload.slug)
+      
+      localStorage.setItem("savedComics", JSON.stringify(filteredSavedComics))
+
+      return {
+        ...state,
+        savedComics: filteredSavedComics
+      }
+    }
     default:
       return state
   }
 }
 
 const manageReadandSavedComics = ():ReadandSavedComicState => {
-  const [{recentlyReadComics, recentlyReadComic}, dispatch] = useReducer(readandSavedComicReducer, initialReadAndSavedComicState)
+  const [{recentlyReadComics, savedComics}, dispatch] = useReducer(readandSavedComicReducer, initialReadAndSavedComicState)
 
   const setRecentlyReadComic = useCallback((value: ComicInterface) => {
     dispatch({
@@ -73,10 +134,24 @@ const manageReadandSavedComics = ():ReadandSavedComicState => {
 
   const setComicStorage = () => {
     localStorage.setItem("recentlyReadComics", JSON.stringify(recentlyReadComics))
+    localStorage.setItem("savedComics", JSON.stringify(savedComics))
   }
 
-  useEffect(() => {
+  const saveAComic = (value: ComicInterface) => {
+    dispatch({
+      type: "addSavedComic",
+      payload: value
+    })
+  }
 
+  const deleteASavedComic = (value: ComicInterface) => {
+    dispatch({
+      type: "deleteSavedComic",
+      payload: value
+    })
+  }
+  
+  useEffect(() => {
     const comicData = localStorage.getItem("recentlyReadComics")
     
     if(comicData) {
@@ -88,15 +163,28 @@ const manageReadandSavedComics = ():ReadandSavedComicState => {
     else{
       setComicStorage()
     }
-  
-  
-
   },[])
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("savedComics")
+    
+    if(savedData){
+      dispatch({
+        type: "createSavedComicsStorage",
+        payload: JSON.parse(savedData)
+      })
+    }
+    else{
+      setComicStorage()
+    }
+  }, [])
 
   return {
     recentlyReadComics,
-    recentlyReadComic,
-    setRecentlyReadComic
+    savedComics,
+    setRecentlyReadComic,
+    saveAComic,
+    deleteASavedComic
   }
 }
 

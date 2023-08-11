@@ -7,6 +7,9 @@ import Overview from '@/components/Overview'
 import AllChapters from '@/components/AllChapters'
 import { useSavedAndReadComics } from '@/contexts/SavedAndReadComicsContext'
 import { ComicInterface } from '@/custom-hooks/getComics'
+import Whiteheart from '/white-heart.svg'
+import Redheart from '/red-heart.svg'
+import Emptyheart from '/empty-heart.svg'
 
 
 
@@ -24,7 +27,7 @@ const ComicDetails = () => {
   const {provider, slug, title, coverURL} = comicInfo
 
   // getting values from the custom hook
-  const {allChapters, activeChapter, setActiveChapter} = getChapters(provider, slug)
+  const {allChapters, setActiveChapter} = getChapters(provider, slug)
 
   // loading state
   const [loadingManga, setLoadingManga] = useState<boolean>(true)
@@ -47,7 +50,7 @@ const ComicDetails = () => {
   
   const sortedChapters = useMemo(() => allChapters.sort((a, b) => a.chapterNum - b.chapterNum), [allChapters])
 
-  const {setRecentlyReadComic} = useSavedAndReadComics()
+  const {setRecentlyReadComic, saveAComic} = useSavedAndReadComics()
 
   useEffect(() => {
     setRecentlyReadComic(comicInfo)
@@ -56,66 +59,32 @@ const ComicDetails = () => {
   
 
   // function to work with select and option
-  const handleChapterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    
-    const value = Number(event.target.value)
-    
-    setActiveChapter(value)
-  }
+
+
 
   return (
-    <main>
-      {/* Information section */}
-      <section
-        className={`relative bg-red-300 bg-center min-h-screen min-w-screen text-white`}
-      >
-        <img src={coverURL} alt={title} className="min-h-screen object-cover object-left-top brightness-[55%]"/>
-        <div>
-          <div className='absolute border border-gray-600 bg-black top-16 left-0 right-0 min-w-64 mx-8 md:mx-20 lg:mx-64 px-4 py-6 pt-10 md:px-6 md:py-12'>
-           <div className="flex justify-start gap-4 px-4 mb-5">
-              <Badge className={`cursor-pointer px-6 py-2 text-md text-gray-300 transition-colors duration-200 ease-in-out ${active ? 'text-white' : 'text-gray-500 hover:border hover:border-gray-500'}`} onClick={handleOverviewBadgeState}>Overview</Badge>
+      <section className={`bg-center min-h-screen text-white`}>  
+          <div className='relative h-screen'>
+            <img src={coverURL} alt={title} className="h-full object-cover object-left-top brightness-[55%]"/>
+            <div className=' absolute border border-gray-600 bg-black top-12 left-0 right-0 min-w-64 mx-8 md:mx-20 lg:mx-64 px-4 py-6 pt-10 md:px-6'>
+            <div className=" flex justify-start gap-3  mb-5">
+                <Badge className={`cursor-pointer px-4 py-2 text-md text-gray-300 transition-colors duration-200 ease-in-out ${active ? 'text-white' : 'text-gray-500 hover:border hover:border-gray-500'}`} onClick={handleOverviewBadgeState}>Overview</Badge>
 
-              <Badge className={`cursor-pointer px-6 py-2 text-md text-gray-300  ${active ? 'text-gray-500 hover:border hover:border-gray-500':'text-white'} `} onClick={handleAllChaptersBadgeState}>Chapters</Badge>
-           </div>
-            {
-              active ? 
-              <Overview comic={comicInfo}/> 
-              :
-              <AllChapters chapters={sortedChapters} comic={comicInfo}/> 
-            }
-             
-             
-          </div>
-          
-        
+                <Badge className={`cursor-pointer px-5 py-2 text-md text-gray-300  ${active ? 'text-gray-500 hover:border hover:border-gray-500':'text-white'} `} onClick={handleAllChaptersBadgeState}>Chapters</Badge>
+
+                <div className='cursor-pointer w-10' onClick={() => saveAComic(comicInfo)}><img src={Whiteheart} alt="like button"/></div>
+
+                
+            </div>
+              {
+                active ? 
+                <Overview comic={comicInfo}/> 
+                :
+                <AllChapters chapters={sortedChapters} comic={comicInfo}/> 
+              }
+            </div>
         </div>  
-          
       </section>
-      {/* Content section */}
-
-      {/* <select value={activeChapter} onChange={handleChapterChange}>
-        <option value="">Select A Chapter to Read</option>
-        {
-          sortedChapters.map((chapter, index) => {
-            return (
-              <option key={index} value={chapter.chapterNum}>{chapter.fullTitle}</option>
-            )
-          })
-        }
-      </select> */}
-
-      {/* <div>
-        {
-          imageContent && imageContent.map((image, index) => {
-            return (
-              <img key={index} src={image} alt={title}/>
-            )
-          })
-        }
-      </div> */}
-
-      
-    </main>
   )
 }
 
