@@ -24,7 +24,7 @@ const ComicDetails = () => {
   const comicInfo: ComicInterface  =  location.state?.comic
   
   // destructure comicInfo
-  const {provider, slug, title, coverURL} = comicInfo
+  const {provider, slug, } = comicInfo
 
   // getting values from the custom hook
   const {allChapters} = getChapters(provider, slug)

@@ -87,10 +87,11 @@ const ComicChapter = () => {
           <div className="flex justify-around mt-4">
             <Button
               onClick={switchToPrevChapter}
-              className={`${currentIndex === 0 ? "cursor-not-allowed bg-slate-500 text-gray-600" : "text-gray-700 bg-slate-400"} `}
+              className={`${currentIndex === 0 ? "cursor-not-allowed bg-teal-800 text-gray-900" : "text-gray-900 bg-teal-500 duration-150 hover:bg-teal-300"} `}
             >Previous Page</Button>
             <Button
               onClick={switchToNextChapter}
+              className="bg-teal-500 text-gray-900 duration-150 hover:bg-teal-300"
             >Next Page</Button>
           </div>
         </div>

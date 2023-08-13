@@ -14,12 +14,12 @@ const NavBar = () => {
   const body = document.querySelector('body')
 
   const openMenu = () => {
-    setMenuOpen(prevMenu => prevMenu = true)
+    setMenuOpen(true)
     body?.classList.add('overflow-hidden')
   }
 
   const closeMenu = () => {
-    setMenuOpen(prevMenu => prevMenu = false)
+    setMenuOpen(false)
     body?.classList.remove('overflow-hidden')
   }
 
