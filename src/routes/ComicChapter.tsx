@@ -23,6 +23,7 @@ const ComicChapter = () => {
 
   },[chapterNumber])
  
+  
 
   useEffect(() => {
     setLoading(true)
@@ -34,6 +35,7 @@ const ComicChapter = () => {
   
   const displayedChapter = allChapters.find(chapter => chapter.chapterNum === activeChapter)
 
+  console.log(displayedChapter)
 
   const currentIndex = allChapters.findIndex(chapter => chapter.chapterNum === Number(activeChapter))
 
@@ -68,7 +70,7 @@ const ComicChapter = () => {
         :
         <div className="text-white mx-10 md:mx-32 lg:mx-56">
           <div className="text-xl font-bold">{comic.title}</div>
-          <div className="text-md font-thin">Chapter {activeChapter}</div>
+          <div className="text-md text-gray-300 font-semibold my-5">Chapter {activeChapter}</div>
           <div className="grid ">
             {
               displayedChapter?.contentURL.map((url, index) => (

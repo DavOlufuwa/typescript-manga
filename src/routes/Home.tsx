@@ -10,6 +10,8 @@ import CaretLeft from '/caret-left.svg'
 import PicsArt from '/pic-ads.png'
 import { useSavedAndReadComics } from "@/contexts/SavedAndReadComicsContext"
 import { ColorRing } from "react-loader-spinner"
+import AOS from 'aos'
+import 'aos/dist/aos.css';
 
 
 const Home = () => {
@@ -20,15 +22,18 @@ const Home = () => {
 
 
   useEffect(() => {
+
+    AOS.init();
+
     setLoading(true)
     const timer = setTimeout(() => {
       setLoading(false)
-    }, 3000)
+    }, 1000)
     return () => clearTimeout(timer)
   }, [])
 
 
-
+  
   const {allComics} = useComics()
 
   const {recentlyReadComics} = useSavedAndReadComics()
@@ -62,18 +67,10 @@ const Home = () => {
             />
           :
           <>
-            <section>
-              <div className="px-14 md:px-20 lg:px-32 text-white">
-                <h1 className="text-white">Recently Viewed Comics</h1>
-                {
-                  recentlyReadComics && recentlyReadComics.map((comic, index) => <div key={index}>{comic.title}</div>)
-                }
-              </div>
-            </section>
             <div >
               {/* First Carousel  */}
               <div className="mt-10 px-14 md:px-20 lg:px-32">
-                <section className="relative w-full">
+                <section className="relative w-full" data-aos="zoom-in">
                   <Swiper
                     onBeforeInit={(swiping) => setSwiping(swiping)}
                     speed={700}
@@ -100,7 +97,6 @@ const Home = () => {
                           <Link 
                             to={`/comics/${comic.slug}`}
                             state={{comic}}
-                            
                           >
                             <div 
                             className="parent-cover relative h-96 sm:mr-5 text-white"
@@ -128,16 +124,36 @@ const Home = () => {
                 </section>
               </div>
                 
-              {/* <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} /> */}
+           
               <section className="relative mx-6 text-center mt-8 md:mx-20 lg:mx-32">
-                <div className=" text-center text-2xl text-white font-bold">
+                <div data-aos="fade-right" className=" text-center text-2xl text-white font-bold">
                   Read Your Favorite Comics Right Here
                 </div>
-                <img className="h-40 w-52 md:h-52 md:w-72 mx-auto" src={PicsArt} alt="PicsArt"/>
+                <img data-aos="fade-left" className="h-40 w-52 md:h-52 md:w-72 mx-auto" src={PicsArt} alt="PicsArt"/>
               </section>
+
+              <section>
+              <div className="px-14 md:px-20 lg:px-32 text-white">
+                <div  data-aos="fade-up" className="title">Recently Viewed Comics</div>
+                <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 ">
+                {
+                  recentlyReadComics && recentlyReadComics.map((comic, index) => 
+                  <Link data-aos="fade-down" key={index} to={`/comics/${comic.slug}`}
+                  state={{comic}}
+                  className="border border-gray-500 text-gray-500 px-2 py-1 rounded-2xl duration-200  hover:text-gray-300 hover:border-gray-300 truncate"
+                  >
+                  
+                    {comic.title}
+                    
+                    </Link>)
+                }
+                </div>
+              </div>
+            </section>
+
               {/* Latest Releases */}
               <section className="small-section ">
-                <div className="title">
+                <div data-aos="fade-up" className="title">
                   Latest Releases
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 md:gap-16">
@@ -148,9 +164,10 @@ const Home = () => {
                           to={`/comics/${comic.slug}`}
                           state={{comic}}
                           key={index}
+                          data-aos="zoom-in-left"
                         >
                           <div className="grid grid-cols-4 items-center">
-                            <div className="h-full md:w-20 lg:w-32">
+                            <div  className="h-full md:w-20 lg:w-32">
                               <img src={comic.coverURL} alt={`cover of comic with title ${comic.title}`} className="rounded-xl object-cover "/>
                             </div>
                             <div className="text-gray-300 text-3xl text-center font-bold col-auto">
@@ -172,9 +189,10 @@ const Home = () => {
                           to={`/comics/${comic.slug}`}
                           state={{comic}}
                           key={index}
+                          data-aos="zoom-in-right"
                         >
                           <div className="grid grid-cols-4 items-center">
-                            <div className="md:h-44 md:w-20 lg:w-32">
+                            <div  className="md:h-44 md:w-20 lg:w-32">
                               <img src={comic.coverURL} alt={`cover of comic with title ${comic.title}`} className="rounded-xl object-fill"/>
                             </div>
                             <div className="text-gray-300 text-3xl text-center font-bold col-auto">
@@ -193,8 +211,8 @@ const Home = () => {
               </section>
 
               {/* Best Picks Section */}
-              <section className="carousel-section pb-32">
-                <div className="title px-6 md:px-20 lg:px-32">
+              <section data-aos="zoom-in" className="carousel-section pb-32">
+                <div  className="title px-6 md:px-20 lg:px-32">
                   Best Picks For You
                 </div>
                 <div className="px-14 md:px-20 lg:px-32">

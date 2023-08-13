@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "aos": "^3.0.0-beta.6",
     "axios": "^1.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -25,6 +26,7 @@
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.4",
     "@types/node": "^20.4.7",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

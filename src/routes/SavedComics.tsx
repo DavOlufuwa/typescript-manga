@@ -18,9 +18,13 @@ const SavedComics = () => {
     <div className='text-white'>
       <div className="text-center text-white text-2xl mb-10">Saved Comics</div>
       <div className='grid gap-3 md:grid-cols-2 lg:grid-cols-3 text-white px-6 md:px-20 lg:px-32'>
+        
+        
         {
-          savedComics && savedComics.map((comic, index) => 
-          <div key={index} className='big flex justify-between items-center w-full md:w-80'>
+          savedComics ?
+
+          savedComics.map((comic, index) => (
+            <div key={index} className='big flex justify-between items-center w-full md:w-80'>
             <Link 
               to={`../comics/${comic.slug}`} 
               state={{comic}} 
@@ -34,6 +38,10 @@ const SavedComics = () => {
             >
               <span className=' border border-white rounded-full px-2 py-1 cursor-pointer text-2xl font-extrabold hover:text-red-400 hover:border-red-400'>&#10005;</span>
             </div>
+          </div>
+          )) : (
+            <div>
+            <span className='border border-white rounded-full px-2 py-1 cursor-pointer text-2xl font-extrabold hover:text-red-400 hover:border-red-400'>No Saved Comics</span>
           </div>
           )
         }

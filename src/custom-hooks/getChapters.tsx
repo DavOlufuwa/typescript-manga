@@ -3,6 +3,7 @@ import axios from "axios"
 
 export interface ChapterInterface {
   provider: string
+  provider_webtoon: string
   slug: string
   fullTitle: string
   shortTitle: string
@@ -89,6 +90,7 @@ const getChapters = (provider: string, webtoon: string):ChapterStateType => {
           type: "setAllChapters",
           payload: response.data
         })
+        
       } catch (error) {
         console.error(error)
       }

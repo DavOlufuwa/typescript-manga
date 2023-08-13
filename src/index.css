@@ -21,14 +21,21 @@
  
   .child-cover{
     @apply absolute hidden flex-col justify-end items-center bottom-0 left-0 p-3 w-full h-full bg-gradient-to-b from-[rgba(15,14,14,0.4)] from-5% to-[rgba(0,0,0,0.88)] to-90%
-    rounded-2xl transition duration-100 ease-in-out
+    rounded-2xl transition duration-100 ease-in-out;
+  }
+  .nav-link{
+    @apply text-slate-300 text-base font-semibold duration-200 hover:text-blue-400;
+  }
+
+  .nav-link.active-link{
+    @apply text-blue-500 pointer-events-none;
   }
 
   .parent-cover:hover .child-cover{
     @apply flex 
   }
   .title{
-    @apply text-white text-left text-xl mb-10
+    @apply text-white font-semibold text-left text-xl mb-10
   }
 
   .small-section{
