@@ -6,16 +6,21 @@ import { Link, NavLink } from "react-router-dom"
 import { useState } from 'react'
 
 
+export const func = ({isActive}:{isActive: boolean}): string => isActive ? "nav-link active-link" : " nav-link"
 
 const NavBar = () => {
 
-  const func = ({isActive}:{isActive: boolean}): string => isActive ? "nav-link active-link" : " nav-link"
   const [menuOpen, setMenuOpen] = useState(false)
   const body = document.querySelector('body')
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen)
-    menuOpen && body?.classList.toggle('overflow-hidden')
+  const openMenu = () => {
+    setMenuOpen(prevMenu => prevMenu = true)
+    body?.classList.add('overflow-hidden')
+  }
+
+  const closeMenu = () => {
+    setMenuOpen(prevMenu => prevMenu = false)
+    body?.classList.remove('overflow-hidden')
   }
 
   return (
@@ -28,18 +33,17 @@ const NavBar = () => {
         </div>
         <div className={`nav-link-container duration-300 absolute min-h-[70vh] left-0 top-[-100%] w-full flex items-center px-16 md:px-5 md:static md:min-h-max md:w-auto ${menuOpen && 'top-[0%] z-40 bg-[#0e0d0d]'}`}>
           <ul className="flex flex-col gap-8 md:flex-row md:items-center md:gap-[4vw] ">
-            <li><NavLink to=""  className={func} onClick={()=> setMenuOpen(false)}>Home</NavLink></li>
-            <li><NavLink to="allcomics" className={func} onClick={()=> setMenuOpen(false)}>All Comics</NavLink></li>
-            <li><NavLink to="savedcomics" className={func} onClick={()=> setMenuOpen(false)}>Saved Comics</NavLink></li>
+            <li><NavLink to="/"  className={func} onClick={closeMenu}>Home</NavLink></li>
+            <li><NavLink to="allcomics" className={func} onClick={closeMenu}>All Comics</NavLink></li>
+            <li><NavLink to="savedcomics" className={func} onClick={closeMenu}>Saved Comics</NavLink></li>
           </ul>
         </div>
         <div className="flex items-center gap-4">
           <div 
             className={`cursor-pointer h-10 md:hidden z-50`}
-            onClick={toggleMenu}
           >
             {
-              menuOpen ? <img src={Close} alt="close menu" /> : <img src={Menu} alt="hamburger menu" />
+              menuOpen ? <img src={Close} alt="close menu" onClick={closeMenu} /> : <img src={Menu} alt="hamburger menu" onClick={openMenu} />
             }
           </div>
         </div>

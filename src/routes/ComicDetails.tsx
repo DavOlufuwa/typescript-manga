@@ -2,7 +2,6 @@ import { useState, useMemo,  } from 'react'
 import { useLocation } from 'react-router-dom'
 import getChapters from '@/custom-hooks/getChapters'
 import { useEffect } from 'react'
-import { Badge } from '@/components/ui/badge'
 import Overview from '@/components/Overview'
 import AllChapters from '@/components/AllChapters'
 import { useSavedAndReadComics } from '@/contexts/SavedAndReadComicsContext'
@@ -54,7 +53,7 @@ const ComicDetails = () => {
   
   const sortedChapters = useMemo(() => allChapters.sort((a, b) => a.chapterNum - b.chapterNum), [allChapters])
 
-  const {setRecentlyReadComic, saveAComic, savedComics} = useSavedAndReadComics()
+  const {setRecentlyReadComic, saveAComic, savedComics, deleteASavedComic} = useSavedAndReadComics()
 
   useEffect(() => {   
     setRecentlyReadComic(comicInfo)
@@ -64,25 +63,26 @@ const ComicDetails = () => {
 
   const isSaved = savedComics.find(comic => comic.slug === comicInfo.slug)
 
-  
-
-  
-
-  // function to work with select and option
-
-
-
   return (
       <section className={`bg-center min-h-screen text-white`}>  
-          <div className='relative h-screen'>
-            <img src={coverURL} alt={title} className="h-full object-cover object-left-top brightness-[55%]"/>
-            <div data-aos="zoom-in" className=' absolute border border-gray-600 bg-black top-12 left-0 right-0 min-w-64 mx-8 md:mx-20 lg:mx-64 px-4 py-6 pt-10 md:px-6'>
+            
+            <div data-aos="zoom-in" className='border border-gray-600 bg-black top-12 left-0 right-0 min-w-64 mx-8 md:mx-20 lg:mx-64 px-4 py-6 pt-10 md:px-6'>
             <div className=" flex justify-start gap-3  mb-5">
-                <Badge className={`cursor-pointer px-4 py-2 text-md text-gray-300 transition-colors duration-200 ease-in-out ${active ? 'text-white' : 'text-gray-500 hover:border hover:border-gray-500'}`} onClick={handleOverviewBadgeState}>Overview</Badge>
 
-                <Badge className={`cursor-pointer px-5 py-2 text-md text-gray-300  ${active ? 'text-gray-500 hover:border hover:border-gray-500':'text-white'} `} onClick={handleAllChaptersBadgeState}>Chapters</Badge>
+                <div className='bg-gray-700 px-4 rounded-md'>
+                  <div className='flex justify-between h-14 items-center gap-5'>
+                    <p className={`text-slate-400 font-semibold cursor-pointer duration-200 hover:text-teal-400 ${active && 'bg-teal-400 text-slate-800 focus:text-slate-800 px-3 py-1 rounded-md shadow-lg  hover:text-slate-800'}`} onClick={handleOverviewBadgeState}>Overview</p>
+                    <p className={`text-slate-400 font-semibold cursor-pointer duration-200 hover:text-teal-400 ${!active && 'bg-teal-400 px-3 py-1 rounded-md shadow-lg text-slate-800 hover:text-slate-800'}`} onClick={handleAllChaptersBadgeState}>Chapters</p>
+                  </div>
+                </div>
 
-                <div className={`cursor-pointer w-10`} onClick={() => saveAComic(comicInfo)}><img src={isSaved ? Redheart : Emptyheart} alt="like button" /></div>
+                {
+                  isSaved ? 
+                  <div className={`cursor-pointer w-10`} onClick={() => deleteASavedComic(comicInfo)}><img src={Redheart} alt="like button" /></div>
+                  :
+                  <div className={`cursor-pointer w-10`} onClick={() => saveAComic(comicInfo)}><img src={Emptyheart} alt="like button" /></div>
+                }
+               
 
                 
             </div>
@@ -93,7 +93,7 @@ const ComicDetails = () => {
                 <AllChapters chapters={sortedChapters} comic={comicInfo}/> 
               }
             </div>
-        </div>  
+         
       </section>
   )
 }

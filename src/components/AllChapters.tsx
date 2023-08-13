@@ -14,8 +14,7 @@ const AllChapters = ({chapters, comic}: ChapterStateType) => {
 
   const filteredChapters: ChapterInterface[] = chapters?.filter(chapter => chapter.contentURL !== null)
 
-  if(chapters) {
-
+  if(filteredChapters.length > 0) {
     return (
       <>
         <div className="mt-8 mb-6 text-lg text-center font-bold">Select a chapter to read</div>
@@ -59,14 +58,15 @@ const AllChapters = ({chapters, comic}: ChapterStateType) => {
     )  
   }
 
-  if(chapters === null)
-     return (
-       <div>
-         <div>
-           <div className="text-xl font-bold">No Chapters yet for this release</div>
-         </div>
-       </div>
-     )
+  else{
+    return (
+      <div>
+        <div>
+          <div className="mt-8 mb-6 text-lg text-center font-bold">No Chapters yet for this release</div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default AllChapters

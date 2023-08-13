@@ -28,15 +28,19 @@ const AllComics = () => {
             )
             return (
               <div key={index} className="">
-                <div className="text-xl font-bold">{letter}</div>
                 {
-                  contents && contents.map((comic, index) => 
-                    <div key={index} className="mb-1">
-                      <Link to={`../comics/${comic.slug}`} state={{comic}}
-                        className=" text-slate-200 duration-150 hover:text-violet-500 "
-                      >{comic.title}</Link>
-                    </div>
-                  )
+                  contents.length > 0 && (
+                    <>
+                    <div className="text-xl font-bold">{letter}</div>
+                        {contents.map((comic, index) => 
+                          <div key={index} className="mb-2 md:mb-1">
+                            <Link to={`../comics/${comic.slug}`} state={{comic}}
+                              className=" text-slate-200 duration-150 hover:text-teal-400 "
+                            >{comic.title}</Link>
+                          </div>
+                        )}
+                    </>
+                    )
                 }
               </div>
             )

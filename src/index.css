@@ -24,7 +24,7 @@
     rounded-2xl transition duration-100 ease-in-out;
   }
   .nav-link{
-    @apply text-slate-300 text-base font-semibold duration-200 hover:text-blue-400;
+    @apply text-slate-300 text-lg font-semibold duration-200 hover:text-blue-400;
   }
 
   .nav-link.active-link{

@@ -131,16 +131,18 @@ const Home = () => {
                 </div>
                 <img data-aos="fade-left" className="h-40 w-52 md:h-52 md:w-72 mx-auto" src={PicsArt} alt="PicsArt"/>
               </section>
-
-              <section>
-              <div className="px-14 md:px-20 lg:px-32 text-white">
+            {/* Recently Read Section */}
+            {
+              recentlyReadComics.length > 0  &&               
+              <section className="my-4">
+              <div className="px-6 md:px-20 lg:px-32 text-white">
                 <div  data-aos="fade-up" className="title">Recently Viewed Comics</div>
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 ">
                 {
-                  recentlyReadComics && recentlyReadComics.map((comic, index) => 
+                  recentlyReadComics.map((comic, index) => 
                   <Link data-aos="fade-down" key={index} to={`/comics/${comic.slug}`}
                   state={{comic}}
-                  className="border border-gray-500 text-gray-500 px-2 py-1 rounded-2xl duration-200  hover:text-gray-300 hover:border-gray-300 truncate"
+                  className="border border-gray-500 text-gray-500 px-2 py-1 rounded-2xl duration-200  hover:text-teal-400 hover:border-teal-400 truncate"
                   >
                   
                     {comic.title}
@@ -150,6 +152,8 @@ const Home = () => {
                 </div>
               </div>
             </section>
+
+            }
 
               {/* Latest Releases */}
               <section className="small-section ">

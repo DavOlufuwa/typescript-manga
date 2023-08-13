@@ -17,7 +17,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path="savedcomics" element={<SavedComics />}/>
+      <Route path="savedcomics" element={<SavedComics />} />
       <Route path="allcomics" element={<AllComics />} />
       <Route path="comics/:slug" element={<ComicDetails />} />
       <Route path="comics/:slug/chapter/:chapter" element={<ComicChapter/>}/>
@@ -30,7 +30,7 @@ function App() {
   return (
     <AllComicsProvider>
       <SavedAndReadComicsProvider>
-        <RouterProvider router={router}/>
+        <RouterProvider  router={router}/>
       </SavedAndReadComicsProvider>
     </AllComicsProvider>
   )
