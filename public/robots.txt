@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /savedcomics
+Allow: /allcomics
